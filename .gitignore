@@ -1,0 +1,12 @@
+*.o
+MANIFEST.bak
+MYMETA.json
+MYMETA.yml
+Makefile
+Makefile.old
+POSIX-RT-Spawn-*
+Spawn.bs
+Spawn.c
+Spawn.o
+blib/
+pm_to_blib
