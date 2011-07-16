@@ -43,7 +43,7 @@ function for creating new processes.
     $pid = spawn 'echo', 'hello world'
 
 Does exactly the same thing as C<system LIST>, except the parent process
-does not wait for the child process to exit. Also the return value is the
+does not wait for the child process to exit. Also, the return value is the
 child pid on success, or false on failure.
 
 See L<perlfunc/system> for more details.
@@ -54,8 +54,8 @@ L<http://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn.html>
 
 =head1 TODO
 
-Allow the user to alter settings via POSIX_RT_SPAWN package variables,
-e.g. C<$POSIX_RT_SPAWN::FLAGS{RESETIDS} = 1>.
+Allow the user to alter posix_spawn settings using package variables, e.g.
+  $POSIX::RT::Spawn::Flags{RESETIDS} = 1
 
 Allow the user to lexically replace the ops that use fork/exec (e.g.
 backticks, open, system) with versions that use posix_spawn.
