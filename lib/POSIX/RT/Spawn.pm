@@ -54,11 +54,26 @@ L<http://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn.html>
 
 =head1 TODO
 
+=over
+
+=item *
+
+Allow the user to modify argv[0] of the spawned process by passing in the
+first argument as a reference to an array of two elements. Eventually add
+support for the "indirect object" (without a comma) style of C<exec> and
+C<system>.
+
+=item *
+
 Allow the user to alter posix_spawn settings using package variables, e.g.
   $POSIX::RT::Spawn::Flags{RESETIDS} = 1
 
+=item *
+
 Allow the user to lexically replace the ops that use fork/exec (e.g.
 backticks, open, system) with versions that use posix_spawn.
+
+=back
 
 =head1 REQUESTS AND BUGS
 
