@@ -8,6 +8,7 @@ ppport.h
 README
 Spawn.xs
 t/00_compile.t
+t/01_spawn.t
 xt/kwalitee.t
 xt/leaktrace.t
 xt/perlcritic.t
