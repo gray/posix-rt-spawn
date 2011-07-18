@@ -18,18 +18,20 @@ GetOptions(
 # Allocate memory to the process.
 my $mem = '1' x int $size * 2 ** 20;
 
+my @cmd = qw(true that);
+
 cmpthese $count, {
     fork_exec => sub {
         my $pid = fork;
         if (0 == $pid) {
-            exec 'true';
+            exec @cmd;
         }
         elsif ($pid) {
             waitpid $pid, 0;
         }
     },
     spawn => sub {
-        my $pid = POSIX::RT::Spawn::spawn('true');
+        my $pid = spawn @cmd;
         waitpid $pid, 0;
     },
 };
