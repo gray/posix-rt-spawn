@@ -48,7 +48,9 @@ Pid_t
 do_posix_spawn3 (pTHX_ SV *really, register SV **mark, register SV **sp) {
     dVAR;
     Pid_t pid;
-    PERL_ARGS_ASSERT_DO_AEXEC5;
+
+    assert(mark); assert(sp)
+
     if (sp > mark) {
         const char **a;
         const char *tmps = NULL;
@@ -103,7 +105,7 @@ do_posix_spawn1 (pTHX_ const char *incmd) {
     /* Make a copy so we can change it */
     const Size_t cmdlen = strlen(incmd) + 1;
 
-    PERL_ARGS_ASSERT_DO_EXEC3;
+    assert(incmd)
 
     Newx(buf, cmdlen, char);
     cmd = buf;
