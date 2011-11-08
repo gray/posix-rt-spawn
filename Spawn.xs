@@ -24,7 +24,7 @@ do_posix_spawn (const char *cmd, char **argv) {
     return errno ? 0 : pid;
 }
 
-/* adapted from doio.c: S_exec_failed */
+/* borrowed from Perl's doio.c: S_exec_failed */
 static void
 S_posix_spawn_failed (pTHX_ const char *cmd) {
     const int e = errno;
@@ -43,7 +43,7 @@ do_posix_spawn_free (pTHX) {
     PL_Cmd = NULL;
 }
 
-/* adapted from doio.c: Perl_do_exec5 */
+/* borrowed from Perl's doio.c: Perl_do_exec5 */
 Pid_t
 do_posix_spawn3 (pTHX_ SV *really, register SV **mark, register SV **sp) {
     dVAR;
@@ -93,7 +93,7 @@ do_posix_spawn_shell(pTHX_ const char *path, char *name, char *flags,
     return pid;
 }
 
-/* adapted from doio.c: Perl_do_exec3 */
+/* borrowed from Perl's doio.c: Perl_do_exec3 */
 Pid_t
 do_posix_spawn1 (pTHX_ const char *incmd) {
     dVAR;
@@ -231,7 +231,7 @@ do_posix_spawn1 (pTHX_ const char *incmd) {
     return pid;
 }
 
-/* adapted from pp_sys.c: pp_exec */
+/* borrowed from Perl's pp_sys.c: pp_exec */
 XS(XS_POSIX__RT__Spawn_spawn); /* prototype to pass -Wmissing-prototypes */
 XS(XS_POSIX__RT__Spawn_spawn) {
     dVAR; dSP; dMARK; dORIGMARK; dTARGET;
@@ -264,13 +264,13 @@ XS(XS_POSIX__RT__Spawn_spawn) {
 
     SP = ORIGMARK;
     XPUSHi(pid);
-    RETURN;
+    PUTBACK;
+    return;
 }
 
 MODULE = POSIX::RT::Spawn    PACKAGE = POSIX::RT::Spawn
 
+PROTOTYPES: DISABLE
+
 BOOT:
-    char *file = __FILE__;
-    newXSproto(
-        "POSIX::RT::Spawn::spawn", XS_POSIX__RT__Spawn_spawn, file, NULL
-    );
+    newXS("POSIX::RT::Spawn::spawn", XS_POSIX__RT__Spawn_spawn, __FILE__);
