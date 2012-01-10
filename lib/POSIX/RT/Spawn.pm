@@ -27,7 +27,7 @@ POSIX::RT::Spawn - Perl interface to the posix_spawn function
 
     use POSIX::RT::Spawn;
 
-    my $pid = spawn "command", "arg1", "arg2"
+    my $pid = spawn 'command', 'arg1', 'arg2'
         or die "failed to spawn: $!";
     waitpid $pid, 0;
 
@@ -58,15 +58,10 @@ L<http://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn.html>
 
 =item *
 
-Allow the user to modify argv[0] of the spawned process by passing in the
-first argument as a reference to an array of two elements. Eventually add
-support for the "indirect object" (without a comma) style of C<exec> and
-C<system>.
-
-=item *
-
 Allow the user to alter posix_spawn settings using package variables, e.g.
   $POSIX::RT::Spawn::Flags{RESETIDS} = 1
+or
+  $POSIX::RT::Spawn::Flags |= &POSIX_SPAWN_RESETIDS
 
 =item *
 
@@ -116,7 +111,7 @@ L<http://search.cpan.org/dist/POSIX-RT-Spawn/>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2011 gray <gray at cpan.org>, all rights reserved.
+Copyright (C) 2011-2012 gray <gray at cpan.org>, all rights reserved.
 
 This library is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
