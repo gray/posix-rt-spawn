@@ -17,7 +17,7 @@ my %conf = (
         parent   => 0,
         XSLoader => 0,
     },
-    BUILD_REQUIRES => { 'Test::More' => 0.82, },
+    BUILD_REQUIRES => { 'Test::More' => 0.98, },
 
     CCFLAGS        => '-Wall',
 
