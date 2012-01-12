@@ -25,7 +25,7 @@ do_posix_spawn (const char *cmd, char **argv) {
 }
 
 /* borrowed from Perl's doio.c: S_exec_failed */
-static void
+STATIC void
 S_posix_spawn_failed (pTHX_ const char *cmd) {
     const int e = errno;
     assert(cmd);
@@ -43,7 +43,7 @@ do_posix_spawn_free (pTHX) {
     PL_Cmd = NULL;
 }
 
-/* borrowed from Perl's doio.c: Perl_do_exec5 */
+/* borrowed from Perl's doio.c: Perl_do_aexec5 */
 Pid_t
 do_posix_spawn3 (pTHX_ SV *really, register SV **mark, register SV **sp) {
     dVAR;
