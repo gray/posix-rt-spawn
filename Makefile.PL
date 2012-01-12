@@ -18,9 +18,6 @@ my %conf = (
         XSLoader => 0,
     },
     BUILD_REQUIRES => { 'Test::More' => 0.98, },
-
-    CCFLAGS        => '-Wall',
-
     META_MERGE     => {
         resources => {
             repository => 'http://github.com/gray/posix-rt-spawn',

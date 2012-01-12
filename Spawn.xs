@@ -8,7 +8,7 @@
 
 #include <spawn.h>
 
-#define PERL_FLAGS_MAX 10
+extern char **environ;
 
 Pid_t
 do_posix_spawn (const char *cmd, char **argv) {
@@ -118,6 +118,7 @@ do_posix_spawn1 (pTHX_ const char *incmd) {
 
 #ifdef CSH
     {
+        #define PERL_FLAGS_MAX 10
         char flags[PERL_FLAGS_MAX];
         if (strnEQ(cmd, PL_cshname, PL_cshlen) &&
             strnEQ(cmd+PL_cshlen, " -c", 3)) {
