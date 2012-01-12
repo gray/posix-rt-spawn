@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 
 use Config;
-use Fcntl qw(F_GETFD F_SETFD FD_CLOEXEC);
+use Fcntl qw(F_SETFD);
 use POSIX::RT::Spawn;
 
 my $Perl = $Config{perlpath};
@@ -22,8 +22,7 @@ sub spawn_cmd {
     pipe my($in, $out) or die "pipe: $!";
 
     # Disable close-on-exec.
-    my $flags = fcntl $out, F_GETFD, 0;
-    fcntl $out, F_SETFD, $flags & ~FD_CLOEXEC;
+    fcntl $out, F_SETFD, 0;
 
     my $fd = fileno $out;
     if (1 == @cmd) { $cmd[0] .= " $fd"; }
@@ -60,7 +59,6 @@ subtest 'single scalar with no shell metacharacters' => sub {
     my $cmd = join ' ', @cmd[0 .. 1], qq('$cmd[2]');
     my ($pid, $xpid) = spawn_cmd '', $cmd;
     is $xpid, $pid, 'returned pid is correct';
-    is $!+0, 0, 'no errno';
 };
 
 subtest 'single scalar with shell metacharacters' => sub {
@@ -68,13 +66,11 @@ subtest 'single scalar with shell metacharacters' => sub {
     my ($pid, $xpid) = spawn_cmd '', 'true && ' . $cmd;
     isnt $xpid, $pid, 'perl opened in subshell';
     is !! $pid, 1, 'valid looking pid';
-    is $!+0, 0, 'no errno';
 };
 
 subtest 'multivalued list' => sub {
     my ($pid, $xpid) = spawn_cmd '', @cmd;
     is $xpid, $pid, 'returned pid is correct';
-    is $!+0, 0, 'no errno';
 };
 
 subtest 'modify process name with indirect object syntax' => sub {
@@ -91,7 +87,6 @@ subtest 'modify process name with indirect object syntax' => sub {
 
         is !! $pid, 1, 'valid looking pid';
         is $xpid, $pid, 'returned pid is correct';
-        is $!+0, 0, 'no errno';
         is $cmd_name, $fake_cmd_name, 'modified process name'
     };
     is $@, '', 'indirect object syntax using block';
@@ -104,7 +99,6 @@ subtest 'modify process name with indirect object syntax' => sub {
 
         is !! $pid, 1, 'valid looking pid';
         is $xpid, $pid, 'returned pid is correct';
-        is $!+0, 0, 'no errno';
         is $cmd_name, $fake_cmd_name, 'modified process name'
     };
     is $@, '', 'indirect object syntax using scalar variable';
