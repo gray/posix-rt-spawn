@@ -23,7 +23,7 @@ sub spawn_cmd {
 
     # Disable close-on-exec.
     my $flags = fcntl $out, F_GETFD, 0;
-    fcntl $out, F_SETFD, ~FD_CLOEXEC & $flags;
+    fcntl $out, F_SETFD, $flags & ~FD_CLOEXEC;
 
     my $fd = fileno $out;
     if (1 == @cmd) { $cmd[0] .= " $fd"; }
