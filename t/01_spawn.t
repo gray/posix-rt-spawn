@@ -31,8 +31,7 @@ sub spawn_cmd {
 
     my $pid;
     if ($real) {
-        $_ = qq('$_') for @cmd[0..$#cmd-1];
-        $pid = eval qq(spawn $real ) . join ',',  @cmd;
+        $pid = eval qq(spawn $real ) . join ',',  map { qq('$_') }@cmd;
         die $@ if $@;
     }
     else {
@@ -49,9 +48,12 @@ sub spawn_cmd {
 }
 
 subtest 'non-existant program' => sub {
+    my $warning;
+    local $SIG{__WARN__} = sub { $warning = $_[0] };
     my $pid = spawn($fake_cmd_name);
     ok ! $pid, 'no pid';
     isnt $!+0, 0, 'errno';
+    like $warning, qr/^Can't spawn/, 'warning';
 };
 
 subtest 'single scalar with no shell metacharacters' => sub {
@@ -78,8 +80,8 @@ subtest 'multivalued list' => sub {
 subtest 'modify process name with indirect object syntax' => sub {
     local $TODO = 'unimplemented';
 
-    # plan skip_all => "Modifying process name only works on Perls >= 5.??.?"
-    #     if $^V lt '5.??.?';
+    # plan skip_all => "Modifying process name requires Perl >= 5.13.08"
+    #     if $^V lt '5.13.8';
 
     eval {
         my @cmd = @cmd;
