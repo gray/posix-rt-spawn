@@ -79,16 +79,16 @@ do_posix_spawn3 (pTHX_ SV *really, register SV **mark, register SV **sp) {
         if (errno)
             S_posix_spawn_failed(aTHX_ (really ? tmps : PL_Argv[0]));
     }
-    do_posix_spawn_free();
+    do_posix_spawn_free(aTHX);
     return pid;
 }
 
 Pid_t
-do_posix_spawn_shell(pTHX_ const char *path, char *name, char *flags,
+do_posix_spawn_shell(const char *path, char *name, char *flags,
     char *cmd)
 {
     Pid_t pid;
-    const char *argv[] = { name, flags, cmd };
+    const char *argv[] = { name, flags, cmd, NULL };
     pid = do_posix_spawn(path, (char **)argv);
     return pid;
 }
@@ -116,7 +116,7 @@ do_posix_spawn1 (pTHX_ const char *incmd) {
 
     /* save an extra exec if possible */
 
-#ifdef CSH
+    #ifdef CSH
     {
         #define PERL_FLAGS_MAX 10
         char flags[PERL_FLAGS_MAX];
@@ -152,7 +152,7 @@ do_posix_spawn1 (pTHX_ const char *incmd) {
           }
         }
     }
-#endif /* CSH */
+    #endif /* CSH */
 
     /* see if there are shell metacharacters in it */
 
@@ -221,13 +221,13 @@ do_posix_spawn1 (pTHX_ const char *incmd) {
         /* PERL_FPU_POST_EXEC */
          /* for system V NIH syndrome */
         if (errno == ENOEXEC) {
-            do_posix_spawn_free();
+            do_posix_spawn_free(aTHX);
             goto doshell;
         }
         if (errno)
             S_posix_spawn_failed(aTHX_ PL_Argv[0]);
     }
-    do_posix_spawn_free();
+    do_posix_spawn_free(aTHX);
     Safefree(buf);
     return pid;
 }
@@ -255,12 +255,12 @@ XS(XS_POSIX__RT__Spawn_spawn) {
     /* indirect object syntax */
     if (0 && PL_op->op_flags & OPf_STACKED) {
         SV * const really = *++MARK;
-        pid = do_posix_spawn3(really, MARK, SP);
+        pid = do_posix_spawn3(aTHX_ really, MARK, SP);
     }
     else if (SP - MARK != 1)
-        pid = do_posix_spawn3(NULL, MARK, SP);
+        pid = do_posix_spawn3(aTHX_ NULL, MARK, SP);
     else {
-        pid = do_posix_spawn1(SvPVx_nolen(sv_mortalcopy(*SP)));
+        pid = do_posix_spawn1(aTHX_ SvPVx_nolen(sv_mortalcopy(*SP)));
     }
 
     SP = ORIGMARK;
