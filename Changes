@@ -1,5 +1,8 @@
 Revision history for POSIX-RT-Spawn
 
+0.04  Fri Jan 13 03:37:34 UTC 2012
+    - Fixed for threaded perls.
+
 0.03  Thu Jan 12 23:11:35 UTC 2012
     - Stopped testing errno, except after expected failure.
 
