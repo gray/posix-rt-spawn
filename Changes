@@ -1,5 +1,8 @@
 Revision history for POSIX-RT-Spawn
 
+0.05  Mon Jan 23 15:58:44 UTC 2012
+    - Added fix for glibc.
+
 0.04  Fri Jan 13 03:37:34 UTC 2012
     - Fixed for threaded perls.
 
