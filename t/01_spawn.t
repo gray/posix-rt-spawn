@@ -30,10 +30,13 @@ sub spawn_cmd {
 
     my $pid;
     if ($real) {
-        $pid = eval qq(spawn $real ) . join ',',  map { qq('$_') }@cmd;
+        my $cmd = qq(spawn $real ) . join ',',  map { qq('$_') } @cmd;
+        note 'command: ', $cmd;
+        $pid = eval $cmd;
         die $@ if $@;
     }
     else {
+        note 'command: ', explain \@cmd;
         $pid = spawn @cmd;
     }
 
@@ -49,6 +52,7 @@ sub spawn_cmd {
 subtest 'non-existant program' => sub {
     my $warning;
     local $SIG{__WARN__} = sub { $warning = $_[0] };
+    note "command: $fake_cmd_name";
     my $pid = spawn($fake_cmd_name);
     ok ! $pid, 'no pid';
     isnt $!+0, 0, 'errno';
