@@ -12,7 +12,7 @@ plan skip_all => "$Perl is not a usable Perl interpreter"
 
 my @cmd = (
     $Perl,  '-e',
-    q(open my $out, ">&=$ARGV[0]"; printf $out "%s\n%s", $$, $^X;),
+    q(open my $out, qq{>&=$ARGV[0]}; printf $out qq{$$\n%s\n$^X}, getppid),
 );
 my $fake_cmd_name = 'lskdjfalksdjfdjfkls';
 
@@ -61,20 +61,22 @@ subtest 'non-existant program' => sub {
 
 subtest 'single scalar with no shell metacharacters' => sub {
     my $cmd = join ' ', @cmd[0 .. 1], qq('$cmd[2]');
-    my ($pid, $xpid) = spawn_cmd '', $cmd;
-    is $xpid, $pid, 'returned pid is correct';
+    my ($pid, $xpid, $ppid) = spawn_cmd '', $cmd;
+    cmp_ok $_, '>', 0,  'valid looking pid' for ($pid, $xpid, $ppid);
+    ok $pid eq $xpid || $pid eq $ppid, 'pid is expected value';
 };
 
 subtest 'single scalar with shell metacharacters' => sub {
     my $cmd = join ' ', @cmd[0 .. 1], qq('$cmd[2]');
-    my ($pid, $xpid) = spawn_cmd '', 'true && ' . $cmd;
-    isnt $xpid, $pid, 'perl opened in subshell';
-    is !! $pid, 1, 'valid looking pid';
+    my ($pid, $xpid, $ppid) = spawn_cmd '', 'true && ' . $cmd;
+    cmp_ok $_, '>', 0,  'valid looking pid' for ($pid, $xpid, $ppid);
+    ok $pid eq $xpid || $pid eq $ppid, 'pid is expected value';
 };
 
 subtest 'multivalued list' => sub {
-    my ($pid, $xpid) = spawn_cmd '', @cmd;
-    is $xpid, $pid, 'returned pid is correct';
+    my ($pid, $xpid, $ppid) = spawn_cmd '', @cmd;
+    cmp_ok $_, '>', 0,  'valid looking pid' for ($pid, $xpid, $ppid);
+    ok $pid eq $xpid || $pid eq $ppid, 'pid is expected value';
 };
 
 subtest 'modify process name with indirect object syntax' => sub {
@@ -87,10 +89,10 @@ subtest 'modify process name with indirect object syntax' => sub {
         my @cmd = @cmd;
         unshift @cmd,  qq({ '$cmd[0]' });
         $cmd[1] = $fake_cmd_name;
-        my ($pid, $xpid, $cmd_name) = spawn_cmd @cmd;
+        my ($pid, $xpid, $ppid, $cmd_name) = spawn_cmd @cmd;
 
-        is !! $pid, 1, 'valid looking pid';
-        is $xpid, $pid, 'returned pid is correct';
+        cmp_ok $_, '>', 0,  'valid looking pid' for ($pid, $xpid, $ppid);
+        ok $pid eq $xpid || $pid eq $ppid, 'pid is expected value';
         is $cmd_name, $fake_cmd_name, 'modified process name'
     };
     is $@, '', 'indirect object syntax using block';
@@ -99,10 +101,10 @@ subtest 'modify process name with indirect object syntax' => sub {
         my @cmd = @cmd;
         unshift @cmd, q($real);
         $cmd[1] = $fake_cmd_name;
-        my ($pid, $xpid, $cmd_name) = spawn_cmd @cmd;
+        my ($pid, $xpid, $ppid, $cmd_name) = spawn_cmd @cmd;
 
-        is !! $pid, 1, 'valid looking pid';
-        is $xpid, $pid, 'returned pid is correct';
+        cmp_ok $_, '>', 0,  'valid looking pid' for ($pid, $xpid, $ppid);
+        ok $pid eq $xpid || $pid eq $ppid, 'pid is expected value';
         is $cmd_name, $fake_cmd_name, 'modified process name'
     };
     is $@, '', 'indirect object syntax using scalar variable';
