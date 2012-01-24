@@ -1,5 +1,10 @@
 Revision history for POSIX-RT-Spawn
 
+0.06  Tue Jan 24 02:29:17 UTC 2012
+    - Fixed inconsistent test results by also checking spawned pid against
+      Perl's ppid, because different command shells have different rules
+      about creating subshells.
+
 0.05  Mon Jan 23 15:58:44 UTC 2012
     - Added fix for glibc.
 
