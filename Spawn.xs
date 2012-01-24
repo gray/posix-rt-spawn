@@ -94,7 +94,7 @@ do_posix_spawn3 (pTHX_ SV *really, register SV **mark, register SV **sp) {
 }
 
 Pid_t
-do_posix_spawn_shell(const char *path, char *name, char *flags,
+do_posix_spawn_shell (const char *path, char *name, char *flags,
     char *cmd)
 {
     Pid_t pid;
