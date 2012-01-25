@@ -1,5 +1,9 @@
 Revision history for POSIX-RT-Spawn
 
+0.06  Tue Jan 24 20:38:39 UTC 2012
+    - Adjusted synopsis and tests to allow for the fact that posix_spawn can
+      return successfully even if the spawned command fails.
+
 0.06  Tue Jan 24 02:29:17 UTC 2012
     - Fixed inconsistent test results by also checking spawned pid against
       Perl's ppid, because different command shells have different rules
