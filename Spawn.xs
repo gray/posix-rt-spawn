@@ -19,16 +19,7 @@ do_posix_spawn (const char *cmd, char **argv) {
 
     posix_spawnattr_init(&attr);
     posix_spawnattr_setflags(&attr, flags);
-#ifdef __GLIBC__
-    /*
-     * Doesn't comply with the spec- return value is always 0 and pid is
-     * always returned.
-     */
-    errno = 0;
-    ret = posix_spawnp(&pid, cmd, NULL, &attr, argv, environ);
-#else
     errno = posix_spawnp(&pid, cmd, NULL, &attr, argv, environ);
-#endif
     posix_spawnattr_destroy(&attr);
 
     return errno ? 0 : pid;

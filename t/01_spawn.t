@@ -39,6 +39,7 @@ sub spawn_cmd {
         note 'command: ', explain \@cmd;
         $pid = spawn @cmd;
     }
+    return unless $pid;
 
     close $out;
     waitpid $pid, 0;
@@ -54,9 +55,14 @@ subtest 'non-existant program' => sub {
     local $SIG{__WARN__} = sub { $warning = $_[0] };
     note "command: $fake_cmd_name";
     my $pid = spawn($fake_cmd_name);
-    ok ! $pid, 'no pid';
-    isnt $!+0, 0, 'errno';
-    like $warning, qr/^Can't spawn/, 'warning';
+    if ($pid) {
+        waitpid $pid, 0;
+        isnt $?>>8, 0, 'child has non-zero status';
+    }
+    else {
+        isnt $!+0, 0, 'errno';
+        like $warning, qr/^Can't spawn/, 'warning';
+    }
 };
 
 subtest 'single scalar with no shell metacharacters' => sub {

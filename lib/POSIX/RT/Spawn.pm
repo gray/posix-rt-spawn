@@ -30,6 +30,7 @@ POSIX::RT::Spawn - Perl interface to the posix_spawn function
     my $pid = spawn 'command', 'arg1', 'arg2'
         or die "failed to spawn: $!";
     waitpid $pid, 0;
+    die "command failed with status: ", $?>>8 if $?;
 
 =head1 DESCRIPTION
 
