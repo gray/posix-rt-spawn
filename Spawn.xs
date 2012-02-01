@@ -4,6 +4,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#define NEED_my_strlcpy
 #include "ppport.h"
 
 #include <spawn.h>
