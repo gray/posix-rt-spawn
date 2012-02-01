@@ -1,6 +1,10 @@
 Revision history for POSIX-RT-Spawn
 
-0.06  Tue Jan 24 20:38:39 UTC 2012
+0.08  Wed Feb  1 20:14:03 UTC 2012
+    - Added support for Perls < 5.8.9 by explicitly requesting ppport to
+      provide the my_strlcpy function.
+
+0.07  Tue Jan 24 20:38:39 UTC 2012
     - Adjusted synopsis and tests to allow for the fact that posix_spawn can
       return successfully even if the spawned command fails.
 
