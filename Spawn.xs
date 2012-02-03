@@ -13,7 +13,6 @@ extern char **environ;
 
 Pid_t
 do_posix_spawn (const char *cmd, char **argv) {
-    int ret;
     Pid_t pid;
     posix_spawnattr_t attr;
     short flags = 0;
