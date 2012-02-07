@@ -1,5 +1,8 @@
 Revision history for POSIX-RT-Spawn
 
+0.09  Tue Feb  7 14:51:37 UTC 2012
+    - my_strlcat is also needed for Perl < 5.8.9.
+
 0.08  Wed Feb  1 20:14:03 UTC 2012
     - Added support for Perls < 5.8.9 by explicitly requesting ppport to
       provide the my_strlcpy function.
