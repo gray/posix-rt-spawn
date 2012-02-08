@@ -262,7 +262,7 @@ XS(XS_POSIX__RT__Spawn_spawn) {
     else if (SP - MARK != 1)
         pid = do_posix_spawn3(aTHX_ NULL, MARK, SP);
     else {
-        pid = do_posix_spawn1(aTHX_ SvPVx_nolen(sv_mortalcopy(*SP)));
+        pid = do_posix_spawn1(aTHX_ SvPV_nolen(sv_mortalcopy(*SP)));
     }
 
     SP = ORIGMARK;
