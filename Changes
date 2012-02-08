@@ -1,5 +1,9 @@
 Revision history for POSIX-RT-Spawn
 
+0.10  Wed Feb  8 07:17:17 UTC 2012
+    - Switched away from undocumented SvPVx_nolen, for compatiblity with
+      Perl < 5.8.9.
+
 0.09  Tue Feb  7 14:51:37 UTC 2012
     - my_strlcat is also needed for Perl < 5.8.9.
 
