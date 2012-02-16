@@ -6,6 +6,7 @@
 
 #define NEED_my_strlcat
 #define NEED_my_strlcpy
+#define NEED_sv_2pv_flags
 #include "ppport.h"
 
 #include <spawn.h>
