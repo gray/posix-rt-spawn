@@ -1,5 +1,9 @@
 Revision history for POSIX-RT-Spawn
 
+0.11  Thu Feb 16 22:16:02 UTC 2012
+    - Added missing semicolons to XS statements.
+    - Added ppport request to provide sv_2pv_flags function for Perl 5.6.2.
+
 0.10  Wed Feb  8 07:17:17 UTC 2012
     - Switched away from undocumented SvPVx_nolen, for compatiblity with
       Perl < 5.8.9.
