@@ -16,10 +16,10 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-    Devel::CallParser
-    Test::More
+    Devel::CheckLib
+    ExtUtils::MakeMaker 6.52
+    Test::More 0.98
     XSLoader
-    parent
 
 A C compiler is required to build this module.
 
