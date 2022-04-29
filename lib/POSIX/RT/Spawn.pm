@@ -2,7 +2,7 @@ package POSIX::RT::Spawn;
 
 use strict;
 use warnings;
-use parent qw(Exporter);
+use Exporter qw(import);
 
 use XSLoader;
 

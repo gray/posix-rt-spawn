@@ -17,6 +17,7 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
     Devel::CheckLib
+    Exporter 5.57
     ExtUtils::MakeMaker 6.52
     Test::More 0.98
     XSLoader

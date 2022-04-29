@@ -17,6 +17,7 @@ my %conf = (
         'ExtUtils::MakeMaker' => 6.52,
     },
     PREREQ_PM => {
+        Exporter => 5.57,
         XSLoader => 0,
     },
     TEST_REQUIRES => { 'Test::More' => 0.98, },
