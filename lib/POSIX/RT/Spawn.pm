@@ -2,8 +2,8 @@ package POSIX::RT::Spawn;
 
 use strict;
 use warnings;
-use Exporter qw(import);
 
+use Exporter qw(import);
 use XSLoader;
 
 our $VERSION    = '0.11';
@@ -21,16 +21,16 @@ __END__
 
 =head1 NAME
 
-POSIX::RT::Spawn - Perl interface to the posix_spawn function
+POSIX::RT::Spawn - interface to the posix_spawn function
 
 =head1 SYNOPSIS
 
-    use POSIX::RT::Spawn;
+  use POSIX::RT::Spawn;
 
-    my $pid = spawn 'command', 'arg1', 'arg2'
-        or die "failed to spawn: $!";
-    waitpid $pid, 0;
-    die "command failed with status: ", $?>>8 if $?;
+  my $pid = spawn 'command', 'arg1', 'arg2'
+      or die "failed to spawn: $!";
+  waitpid $pid, 0;
+  die "command failed with status: ", $?>>8 if $?;
 
 =head1 DESCRIPTION
 
@@ -41,11 +41,11 @@ function for creating new processes.
 
 =head2 spawn
 
-    $pid = spawn 'echo', 'hello world'
+  $pid = spawn 'echo', 'hello world'
 
-Does exactly the same thing as C<system LIST>, except the parent process
-does not wait for the child process to exit. Also, the return value is the
-child pid on success, or false on failure.
+Does exactly the same thing as C<system LIST>, except the parent process does
+not wait for the child process to exit. Also, the return value is the child
+pid on success, or false on failure.
 
 See L<perlfunc/system> for more details.
 
@@ -68,45 +68,6 @@ or
 
 Allow the user to lexically replace the ops that use fork/exec (e.g.
 backticks, open, system) with versions that use posix_spawn.
-
-=back
-
-=head1 REQUESTS AND BUGS
-
-Please report any bugs or feature requests to
-L<http://rt.cpan.org/Public/Bug/Report.html?Queue=POSIX-RT-Spawn>.  I will
-be notified, and then you'll automatically be notified of progress on your
-bug as I make changes.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc POSIX::RT::Spawn
-
-You can also look for information at:
-
-=over
-
-=item * GitHub Source Repository
-
-L<http://github.com/gray/posix-rt-spawn>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/POSIX-RT-Spawn>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/POSIX-RT-Spawn>
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/Public/Dist/Display.html?Name=POSIX-RT-Spawn>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/POSIX-RT-Spawn/>
 
 =back
 
