@@ -112,10 +112,10 @@ L<http://search.cpan.org/dist/POSIX-RT-Spawn/>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2011-2012 gray <gray at cpan.org>, all rights reserved.
+Copyright (c) 2011-2022 gray <gray at cpan.org>
 
-This library is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
 
 =head1 AUTHOR
 
